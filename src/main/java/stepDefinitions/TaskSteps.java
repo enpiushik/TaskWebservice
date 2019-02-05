@@ -37,9 +37,8 @@ public class TaskSteps {
     String uniqueIdComment = UUID.randomUUID().toString();
     String uniqueIdProfile = "1";
 
-
     @Given("^I am opening localhost posts and get OK status$")
-    public void iAmOpeningLocalhostPostsAndGetOKStatus() {
+    public void iAmOpeningLocalhostPostsAndGetOKStatus() throws Exception {
         given().
                 when().
                 get("http://localhost:3000/posts").
@@ -58,9 +57,8 @@ public class TaskSteps {
                 statusCode(404);
     }
 
-    //@Test
     @Then("^I am trying to test POST method in posts and get CREATED status$")
-    public void iAmTryingToTestPOSTMethodInPostsAndGetCREATEDStatus() {
+    public void iAmTryingToTestPOSTMethodInPostsAndGetCREATEDStatus() throws Exception {
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
 
@@ -86,7 +84,7 @@ public class TaskSteps {
     }
 
     @Given("^I am opening localhost comments and get OK status$")
-    public void iAmOpeningLocalhostCommentsAndGetOKStatus() {
+    public void iAmOpeningLocalhostCommentsAndGetOKStatus() throws Exception {
         given().
                 when().
                 get("http://localhost:3000/comments").
@@ -106,7 +104,7 @@ public class TaskSteps {
     }
 
     @And("^I am trying to test POST method in comments and get CREATED status$")
-    public void iAmTryingToTestPOSTMethodInCommentsAndGetCREATEDStatus() {
+    public void iAmTryingToTestPOSTMethodInCommentsAndGetCREATEDStatus() throws Exception {
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
 
@@ -130,7 +128,7 @@ public class TaskSteps {
     }
 
     @Given("^I am opening localhost profile and get OK status$")
-    public void iAmOpeningLocalhostProfileAndGetOKStatus() {
+    public void iAmOpeningLocalhostProfileAndGetOKStatus() throws Exception {
         given().
                 when().
                 get("http://localhost:3000/profile").
@@ -150,7 +148,7 @@ public class TaskSteps {
     }
 
     @Then("^I am trying to create one more variable and get CREATED status$")
-    public void iAmTryingToCreateOneMoreVariableAndGetCREATEDStatus() {
+    public void iAmTryingToCreateOneMoreVariableAndGetCREATEDStatus() throws Exception {
         RequestSpecification request = given();
         request.header("Content-Type", "application/json");
 
@@ -168,5 +166,51 @@ public class TaskSteps {
 
         Assert.assertThat(profile.get(id), equalTo(uniqueIdProfile));
         Assert.assertThat(profile.get(name), equalTo(authorBody));
+    }
+
+    @When("^I am going to post with id one$")
+    public void iAmGoingToPostWithIdOne() throws Exception {
+        given().
+                when().
+                get("http://localhost:3000/posts/1").
+                then().
+                assertThat().
+                statusCode(200);
+    }
+
+    @Then("^I am creating additional post and get CREATED status$")
+    public void iAmCreatingAdditionalPostAndGetCREATEDStatus() throws Exception {
+        RequestSpecification request = given();
+        request.header("Content-Type", "application/json");
+
+        JSONObject json = new JSONObject();
+        json.put(id, uniqueIdPosts);
+        json.put(title, "abcd");
+        json.put(author, "abcd");
+        request.body(json.toJSONString());
+
+        Response response = request.post("http://localhost:3000/posts");
+        int code = response.getStatusCode();
+        Assert.assertEquals(code, 201);
+    }
+
+    @And("^I am going to all posts$")
+    public void iAmGoingToAllPosts() throws Exception {
+        given().
+                when().
+                get("http://localhost:3000/posts").
+                then().
+                assertThat().
+                statusCode(200);
+    }
+
+    @And("^I am going on home page$")
+    public void iAmGoingOnHomePage() throws Exception {
+        given().
+                when().
+                get("http://localhost:3000/").
+                then().
+                assertThat().statusCode(200);
+
     }
 }
