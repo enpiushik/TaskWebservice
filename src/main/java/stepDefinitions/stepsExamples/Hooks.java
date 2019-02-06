@@ -24,15 +24,15 @@
 //
 //    @After
 //    public void embedScreenshot(Scenario scenario) {
-//        if (scenario.isFailed()) {
-//            try {
-//                scenario.write("Current Page URL is " + driver.getCurrentUrl());
-//                byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-//                scenario.embed(screenshot, "image/png");
-//            } catch (WebDriverException somePlatformsDontSupportScreenshots) {
-//                System.err.println(somePlatformsDontSupportScreenshots.getMessage());
-//            }
-//        }
+////        if (scenario.isFailed()) {
+////            try {
+////                scenario.write("Current Page URL is " + driver.getCurrentUrl());
+////                byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+////                scenario.embed(screenshot, "image/png");
+////            } catch (WebDriverException somePlatformsDontSupportScreenshots) {
+////                System.err.println(somePlatformsDontSupportScreenshots.getMessage());
+////            }
+////        }
 //        driver.quit();
 //    }
 //}

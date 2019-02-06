@@ -38,7 +38,7 @@ public class TaskSteps {
     String uniqueIdProfile = "1";
 
     @Given("^I am opening localhost posts and get OK status$")
-    public void iAmOpeningLocalhostPostsAndGetOKStatus() throws Exception {
+    public void iAmOpeningLocalhostPostsAndGetOKStatus() throws Throwable {
         given().
                 when().
                 get("http://localhost:3000/posts").
@@ -58,7 +58,7 @@ public class TaskSteps {
     }
 
     @Then("^I am trying to test POST method in posts and get CREATED status$")
-    public void iAmTryingToTestPOSTMethodInPostsAndGetCREATEDStatus() throws Exception {
+    public void iAmTryingToTestPOSTMethodInPostsAndGetCREATEDStatus() throws Throwable {
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
 
@@ -84,7 +84,7 @@ public class TaskSteps {
     }
 
     @Given("^I am opening localhost comments and get OK status$")
-    public void iAmOpeningLocalhostCommentsAndGetOKStatus() throws Exception {
+    public void iAmOpeningLocalhostCommentsAndGetOKStatus() throws Throwable {
         given().
                 when().
                 get("http://localhost:3000/comments").
@@ -104,7 +104,7 @@ public class TaskSteps {
     }
 
     @And("^I am trying to test POST method in comments and get CREATED status$")
-    public void iAmTryingToTestPOSTMethodInCommentsAndGetCREATEDStatus() throws Exception {
+    public void iAmTryingToTestPOSTMethodInCommentsAndGetCREATEDStatus() throws Throwable {
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
 
@@ -128,7 +128,7 @@ public class TaskSteps {
     }
 
     @Given("^I am opening localhost profile and get OK status$")
-    public void iAmOpeningLocalhostProfileAndGetOKStatus() throws Exception {
+    public void iAmOpeningLocalhostProfileAndGetOKStatus() throws Throwable {
         given().
                 when().
                 get("http://localhost:3000/profile").
@@ -148,7 +148,7 @@ public class TaskSteps {
     }
 
     @Then("^I am trying to create one more variable and get CREATED status$")
-    public void iAmTryingToCreateOneMoreVariableAndGetCREATEDStatus() throws Exception {
+    public void iAmTryingToCreateOneMoreVariableAndGetCREATEDStatus() throws Throwable {
         RequestSpecification request = given();
         request.header("Content-Type", "application/json");
 
@@ -169,7 +169,7 @@ public class TaskSteps {
     }
 
     @When("^I am going to post with id one$")
-    public void iAmGoingToPostWithIdOne() throws Exception {
+    public void iAmGoingToPostWithIdOne() throws Throwable {
         given().
                 when().
                 get("http://localhost:3000/posts/1").
@@ -179,7 +179,7 @@ public class TaskSteps {
     }
 
     @Then("^I am creating additional post and get CREATED status$")
-    public void iAmCreatingAdditionalPostAndGetCREATEDStatus() throws Exception {
+    public void iAmCreatingAdditionalPostAndGetCREATEDStatus() throws Throwable {
         RequestSpecification request = given();
         request.header("Content-Type", "application/json");
 
@@ -195,7 +195,7 @@ public class TaskSteps {
     }
 
     @And("^I am going to all posts$")
-    public void iAmGoingToAllPosts() throws Exception {
+    public void iAmGoingToAllPosts() throws Throwable {
         given().
                 when().
                 get("http://localhost:3000/posts").
@@ -205,7 +205,7 @@ public class TaskSteps {
     }
 
     @And("^I am going on home page$")
-    public void iAmGoingOnHomePage() throws Exception {
+    public void iAmGoingOnHomePage() throws Throwable {
         given().
                 when().
                 get("http://localhost:3000/").
