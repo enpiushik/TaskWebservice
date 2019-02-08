@@ -20,7 +20,7 @@ import java.util.Date;
         features = "src/main/resources/features/",
         plugin = {"pretty",
                 "html:target/TestingReport"},
-        tags = {"@task, @posts"},
+        tags = {"@test"},
         glue = {"stepDefinitions"}
 )
 public class CucumberRunner {
