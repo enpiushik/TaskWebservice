@@ -287,7 +287,46 @@ public class TaskSteps {
         Assert.assertEquals(code, 200);
     }
 
-    @Given("^I am creating post with \"([^\"]*)\" and \"([^\"]*)\" for delete$")
+    @Given("^I delete all created posts and comments$")
+    public void iDeleteAllCreatedPostsAndComments() throws Throwable {
+        for (int i = 2; i < 3; i++) {
+            String str_i = Integer.toString(i);
+            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.deleteStatus("/comments/" + str_i + "/") == 200);
+            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.getStatus("/comments/" + str_i + "/") == 404);
+        }
+
+        for (int i = 2; i < 4; i++) {
+            String str_i = Integer.toString(i);
+            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.deleteStatus("/posts/" + str_i + "/") == 200);
+            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.getStatus("/posts/" + str_i + "/") == 404);
+        }
+
+        for (int i = 2; i < 3; i++) {
+            String str_i = Integer.toString(i);
+            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.deleteStatus("/users/" + str_i + "/") == 200);
+            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.getStatus("/users/" + str_i + "/") == 404);
+        }
+    }
+
+    public int getStatus(String parametr) {
+        return given().
+                when().
+                get(URL + parametr).
+                then().
+                extract().
+                statusCode();
+    }
+
+    public int deleteStatus(String parametr) {
+        return given().
+                when().
+                delete(URL + parametr).
+                then().
+                extract().
+                statusCode();
+    }
+
+    @When("^I am creating post with \"([^\"]*)\" and \"([^\"]*)\" for delete$")
     public void iAmCreatingPostWithAndForDelete(String title1, String author1) throws Throwable {
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
@@ -303,63 +342,13 @@ public class TaskSteps {
         Assert.assertEquals(code, 201);
     }
 
-    @When("^I delete created post$")
+    @Then("^I delete created post$")
     public void iDeleteCreatedPost() throws Throwable {
         Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> this.deleteStatus("/posts/123") == 200);
     }
 
-    public int deleteStatus(String parametr) {
-        return given().
-                when().
-                delete(URL + parametr).
-                then().
-                extract().
-                statusCode();
-    }
-
-    @Then("^I am checking that correct post was deleted$")
+    @And("^I am checking that correct post was deleted$")
     public void iAmCheckingThatCorrectPostWasDeleted() throws Throwable {
         Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> this.getStatus("/posts/123") == 404);
-    }
-
-    public int getStatus(String parametr) {
-        return given().
-                when().
-                get(URL + parametr).
-                then().
-                extract().
-                statusCode();
-    }
-
-    @And("^I delete all created posts and comments$")
-    public void iDeleteAllCreatedPostsAndComments() throws Throwable {
-        for (int i = 2; i < 4; i++) {
-            String str_i = Integer.toString(i);
-            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.deleteStatus("/posts/" + str_i + "/") == 200);
-            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.getStatus("/posts/" + str_i + "/") == 404);
-        }
-
-//        for (int i = 2; i < 3; i++) {
-//            String str_i = Integer.toString(i);
-//            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.deleteStatus("/comments/" + str_i + "/") == 200);
-//            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.getStatus("/comments/" + str_i + "/") == 404);
-//        }
-//
-//
-//        for (int i = 2; i < 3; i++) {
-//            String str_i = Integer.toString(i);
-//            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.deleteStatus("/users/" + str_i + "/") == 200);
-//            Awaitility.await().atMost(2, TimeUnit.SECONDS).until(() -> this.getStatus("/users/" + str_i + "/") == 404);
-//        }
-
-        given().
-                when().
-                delete(URL + "/comments/2");
-
-        given().
-                when().
-                delete(URL + "/users/2");
-
-
     }
 }
