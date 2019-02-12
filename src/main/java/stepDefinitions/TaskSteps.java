@@ -264,7 +264,7 @@ public class TaskSteps {
                 statusCode(200);
     }
 
-    @Given("^I am getting all headers and check status code$")
+    @When("^I am getting all headers and check status code$")
     public void iAmGettingAllHeadersAndCheckStatusCode() throws Throwable {
         Response response = get(URL);
         Headers allHeaders = response.getHeaders();
@@ -274,7 +274,7 @@ public class TaskSteps {
         Assert.assertEquals(code, 200);
     }
 
-    @And("^I am getting single header Content-Type, checking status code, validation response$")
+    @Then("^I am getting single header Content-Type, checking status code, validation response$")
     public void iAmGettingSingleHeaderContentTypeCheckingStatusCodeValidationResponse() throws Throwable {
         Response response = get(URL + "/posts");
         String contentType = response.header("Content-Type");
